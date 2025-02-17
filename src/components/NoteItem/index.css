@@ -1,0 +1,13 @@
+.note-buttons-container {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+}
+
+.note-btn {
+  flex-grow: 1;
+}
+
+.note-item {
+  list-style-type: none;
+}
