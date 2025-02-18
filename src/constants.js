@@ -1,3 +1,1 @@
-export const apiUrl = "http://localhost:3000";
-
-//  "https://notes-backend-excp.onrender.com"
+export const apiUrl = "https://notes-backend-excp.onrender.com";
