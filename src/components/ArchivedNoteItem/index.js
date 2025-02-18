@@ -91,7 +91,7 @@ const NoteItem = ({
             <Card.Text>{content}</Card.Text>
             <div className="d-flex flex-column mt-5">
               <Button variant="primary" className="mb-3" onClick={onClickPin}>
-                Pin
+                {isPinned ? "Un Pin" : `Pin`}
               </Button>
               <Button variant="secondary" onClick={onClickUnArchive}>
                 UnArchive
