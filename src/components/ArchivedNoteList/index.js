@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import Loader from "../Loader";
-import NoteItem from "../NoteItem";
+import ArchiveNoteItem from "../ArchivedNoteItem";
 import { useNavigate } from "react-router-dom";
 import { apiUrl } from "../../constants";
-import "./index.css";
 
 const NoteList = () => {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ const NoteList = () => {
     setIsLoading(true);
     const jwtToken = Cookies.get("jwt_token");
 
-    const url = `${apiUrl}/notes`;
+    const url = `${apiUrl}/notes/archives`;
     const options = {
       headers: {
         "Content-Type": "application/json",
@@ -34,6 +33,7 @@ const NoteList = () => {
     }
     setIsLoading(false);
   };
+
   useEffect(() => {
     fetchUserNotes();
   }, []);
@@ -44,12 +44,12 @@ const NoteList = () => {
 
   const renderNotesList = () => {
     if (notes.length === 0) {
-      return <h3 className="text-center">No notes created</h3>;
+      return <h3 className="text-center">No Notes Archived</h3>;
     }
     return (
       <ul className="notes-list">
         {notes.map((eachNote) => (
-          <NoteItem
+          <ArchiveNoteItem
             noteDetails={eachNote}
             key={eachNote.id}
             deleteNote={deleteNote}

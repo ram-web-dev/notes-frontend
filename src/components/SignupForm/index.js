@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Loader from "../Loader";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../../constants";
 
 function SignUpForm() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function SignUpForm() {
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const url = "https://notes-backend-excp.onrender.com/signup";
+    const url = `${apiUrl}/signup`;
     const userCredentials = { name, email, password };
 
     const options = {

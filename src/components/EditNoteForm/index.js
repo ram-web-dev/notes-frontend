@@ -1,18 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Loader from "../Loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import { apiUrl } from "../../constants";
 
-function CreateNoteForm() {
+function EditNoteForm() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const fetchNote = async () => {
+    setIsLoading(true);
+    const jwtToken = Cookies.get("jwt_token");
+    const url = `${apiUrl}/notes/${id}`;
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: "GET",
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (response.ok) {
+      const {
+        note: { title, content, category },
+      } = data;
+
+      setTitle(title);
+      setContent(content);
+      setCategory(category);
+    } else {
+      navigate("/");
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchNote();
+  }, []);
 
   const onChangeTitleInput = (e) => {
     setTitle(e.target.value);
@@ -29,7 +61,7 @@ function CreateNoteForm() {
     e.preventDefault();
     setIsLoading(true);
     const jwtToken = Cookies.get("jwt_token");
-    const url = `${apiUrl}/notes`;
+    const url = `${apiUrl}/notes/${id}`;
     const notesData = { title, content, category };
 
     const options = {
@@ -37,7 +69,7 @@ function CreateNoteForm() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
       },
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(notesData),
     };
     const response = await fetch(url, options);
@@ -79,7 +111,7 @@ function CreateNoteForm() {
         <Form.Control
           as="textarea"
           rows={3}
-          placeholder="Write in detail..."
+          placeholder="Content"
           value={content}
           onChange={onChangeContentInput}
         />
@@ -87,11 +119,11 @@ function CreateNoteForm() {
       <Form.Text className="text-danger">{errorMessage}</Form.Text>
       <div>
         <Button className="mt-3" variant="primary" type="submit">
-          Submit
+          Save
         </Button>
       </div>
     </Form>
   );
 }
 
-export default CreateNoteForm;
+export default EditNoteForm;

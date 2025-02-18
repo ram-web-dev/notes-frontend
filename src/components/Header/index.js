@@ -11,16 +11,18 @@ function Header() {
     navigate("/login");
   };
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-white">
       <Container>
-        <Link className="nav-link" to="/dashboard">
+        <Link className="nav-link" to="/">
           <Navbar.Brand as="span">Notes</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as="span">
-              <Link className="nav-link">Archive</Link>
+              <Link className="nav-link" to="/archives">
+                Archives
+              </Link>
             </Nav.Link>
             <Nav.Link as="button" onClick={onClickLogout}>
               Logout

@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Cookies from "js-cookie";
 import Loader from "../Loader";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../../constants";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function LoginForm() {
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const url = "https://notes-backend-excp.onrender.com/login";
+    const url = `${apiUrl}/login`;
     const userCredentials = { email, password };
 
     const options = {

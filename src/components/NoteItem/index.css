@@ -11,3 +11,6 @@
 .note-item {
   list-style-type: none;
 }
+.pinned {
+  order: -1;
+}

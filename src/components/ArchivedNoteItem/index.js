@@ -7,8 +7,6 @@ import Card from "react-bootstrap/Card";
 import NoteItemHolder from "../NoteItemLoader/Index";
 import { apiUrl } from "../../constants";
 
-import "./index.css";
-
 const NoteItem = ({
   noteDetails: { id, title, content, category, pinned },
   deleteNote,
@@ -21,12 +19,12 @@ const NoteItem = ({
     navigate(`/notes/${id}/edit`);
   };
 
-  const onClickArchive = async () => {
+  const onClickUnArchive = async () => {
     setIsLoading(true);
     const jwtToken = Cookies.get("jwt_token");
     const url = `${apiUrl}/notes/${id}/archive`;
     const archivedData = {
-      archived: true,
+      archived: false,
     };
     const options = {
       headers: {
@@ -63,22 +61,6 @@ const NoteItem = ({
     setIsLoading(false);
   };
 
-  const onClickDelete = async () => {
-    setIsLoading(true);
-    const jwtToken = Cookies.get("jwt_token");
-    const url = `${apiUrl}/notes/${id}`;
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      method: "DELETE",
-    };
-    await fetch(url, options);
-    deleteNote(id);
-    setIsLoading(false);
-  };
-
   return (
     <li className={`note-item ${isPinned ? "pinned" : ""}`}>
       {isLoading ? (
@@ -95,8 +77,8 @@ const NoteItem = ({
               <Button variant="primary" className="mb-3" onClick={onClickPin}>
                 Pin
               </Button>
-              <Button variant="secondary" onClick={onClickArchive}>
-                Archive
+              <Button variant="secondary" onClick={onClickUnArchive}>
+                UnArchive
               </Button>
             </div>
             <div className="note-buttons-container mt-3">
@@ -107,11 +89,7 @@ const NoteItem = ({
               >
                 Edit
               </Button>
-              <Button
-                variant="danger"
-                className="note-btn"
-                onClick={onClickDelete}
-              >
+              <Button variant="danger" className="note-btn">
                 Delete
               </Button>
             </div>
