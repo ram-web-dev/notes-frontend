@@ -44,18 +44,21 @@ const NoteList = () => {
 
   const renderNotesList = () => {
     if (notes.length === 0) {
-      return <h3 className="text-center">No Notes Archived</h3>;
+      return <h3 className="text-center mt-5">No Notes Archived</h3>;
     }
     return (
-      <ul className="notes-list">
-        {notes.map((eachNote) => (
-          <ArchiveNoteItem
-            noteDetails={eachNote}
-            key={eachNote.id}
-            deleteNote={deleteNote}
-          />
-        ))}
-      </ul>
+      <>
+        <h2 className="mt-4 mb-3">Archives</h2>
+        <ul className="notes-list">
+          {notes.map((eachNote) => (
+            <ArchiveNoteItem
+              noteDetails={eachNote}
+              key={eachNote.id}
+              deleteNote={deleteNote}
+            />
+          ))}
+        </ul>
+      </>
     );
   };
 

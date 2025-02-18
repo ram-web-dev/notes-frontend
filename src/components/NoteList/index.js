@@ -44,7 +44,7 @@ const NoteList = () => {
 
   const renderNotesList = () => {
     if (notes.length === 0) {
-      return <h3 className="text-center">No notes created</h3>;
+      return <h3 className="text-center mt-5">No notes created</h3>;
     }
     return (
       <ul className="notes-list">

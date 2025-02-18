@@ -61,6 +61,22 @@ const NoteItem = ({
     setIsLoading(false);
   };
 
+  const onClickDelete = async () => {
+    setIsLoading(true);
+    const jwtToken = Cookies.get("jwt_token");
+    const url = `${apiUrl}/notes/${id}`;
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: "DELETE",
+    };
+    await fetch(url, options);
+    deleteNote(id);
+    setIsLoading(false);
+  };
+
   return (
     <li className={`note-item ${isPinned ? "pinned" : ""}`}>
       {isLoading ? (
@@ -89,7 +105,11 @@ const NoteItem = ({
               >
                 Edit
               </Button>
-              <Button variant="danger" className="note-btn">
+              <Button
+                variant="danger"
+                className="note-btn"
+                onClick={onClickDelete}
+              >
                 Delete
               </Button>
             </div>
